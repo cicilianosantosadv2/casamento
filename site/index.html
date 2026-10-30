@@ -204,6 +204,20 @@
   .icon { background: none; border: 0; padding: 8px; border-radius: 50%; display: grid; place-items: center; }
   .icon:hover { background: #ffffff1a; }
   .icon svg { width: 26px; height: 26px; }
+  .cast {
+    display: none; align-items: center; gap: 8px; flex: none;
+    background: none; color: var(--text); border: 1px solid #ffffff59; border-radius: 6px;
+    padding: 8px 12px; font-size: 14px; font-weight: 500;
+  }
+  .cast.show { display: inline-flex; }
+  .cast:hover { background: #ffffff1a; }
+  .cast.on { border-color: var(--text); background: #ffffff26; }
+  .cast svg { width: 20px; height: 20px; }
+  .cast-msg { position: absolute; left: 50%; top: 12px; transform: translateX(-50%); z-index: 2;
+    background: #000000d9; border: 1px solid #ffffff40; border-radius: 6px; padding: 8px 14px; font-size: 14px;
+    display: none; max-width: calc(100% - 32px); text-align: center; }
+  .cast-msg.show { display: block; }
+  @media (max-width: 480px) { .cast span { display: none; } }
   .p-stage { flex: 1; min-height: 0; display: grid; place-items: center; position: relative; }
   .p-stage video { width: 100%; height: 100%; max-height: 100%; object-fit: contain; background: #000; }
   .next {
@@ -321,8 +335,13 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M15 5l-7 7 7 7"/></svg>
       </button>
       <div class="now"><small id="now-num">Abertura</small><b id="now-title">Daniela &amp; Anderson</b></div>
+      <button class="cast" type="button" id="p-cast" aria-label="Transmitir para a TV">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 8V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6M3 12a8 8 0 0 1 8 8M3 16a4 4 0 0 1 4 4M3 20h.01"/></svg>
+        <span id="p-cast-txt">Transmitir para a TV</span>
+      </button>
     </div>
     <div class="p-stage">
+      <p class="cast-msg" id="cast-msg" role="status"></p>
       <video id="video" controls preload="metadata" playsinline poster="video/capa.jpg">
         <source src="video/filme.mp4" type="video/mp4">
         Seu navegador não reproduz vídeo MP4.
@@ -457,6 +476,37 @@
     if (Math.floor(video.currentTime) % 5 === 0) savePos(video.currentTime);
   });
   video.addEventListener("ended", function () { savePos(0); });
+
+  // Transmitir para a TV: Chromecast (Remote Playback API) ou AirPlay (Safari)
+  var castBtn = $("p-cast"), castTxt = $("p-cast-txt"), castMsg = $("cast-msg"), msgTimer;
+  function castNote(text) {
+    castMsg.textContent = text; castMsg.classList.add("show");
+    clearTimeout(msgTimer); msgTimer = setTimeout(function () { castMsg.classList.remove("show"); }, 5000);
+  }
+  function castState(on) {
+    castBtn.classList.toggle("on", on);
+    castTxt.textContent = on ? "Na TV" : "Transmitir para a TV";
+  }
+  if (video.remote && typeof video.remote.prompt === "function") {
+    video.remote.watchAvailability(function (ok) { castBtn.classList.toggle("show", ok); })
+      .catch(function () { castBtn.classList.add("show"); });
+    video.remote.addEventListener("connect", function () { castState(true); castNote("Tocando na TV. Os capítulos continuam funcionando aqui."); });
+    video.remote.addEventListener("disconnect", function () { castState(false); });
+    castBtn.addEventListener("click", function () {
+      video.remote.prompt().catch(function (err) {
+        if (err && err.name === "NotFoundError") castNote("Nenhuma TV encontrada. Ligue a TV e confira se ela está no mesmo Wi-Fi.");
+        else if (!err || err.name !== "AbortError") castNote("Não foi possível transmitir por aqui. Tente pelo menu ⋮ do vídeo.");
+      });
+    });
+  } else if (window.WebKitPlaybackTargetAvailabilityEvent) {
+    video.addEventListener("webkitplaybacktargetavailabilitychanged", function (ev) {
+      castBtn.classList.toggle("show", ev.availability === "available");
+    });
+    video.addEventListener("webkitcurrentplaybacktargetiswirelesschanged", function () {
+      castState(video.webkitCurrentPlaybackTargetIsWireless);
+    });
+    castBtn.addEventListener("click", function () { video.webkitShowPlaybackTargetPicker(); });
+  }
 
   // Barra superior sólida ao rolar
   var top = $("top");
