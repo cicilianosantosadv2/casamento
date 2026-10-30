@@ -1,0 +1,4 @@
+Coloque aqui a sua trilha instrumental com o nome: trilha.mp3
+Nao foi incluido audio com licenciamento incerto.
+Guarde a origem e a licenca da faixa escolhida em: roteiro/licenca-trilha.txt
+O render FINAL permanece bloqueado ate que trilha.mp3 seja adicionada.

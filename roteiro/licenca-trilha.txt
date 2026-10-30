@@ -1,0 +1,8 @@
+Faixa: Gymnopedie No. 1 - "Erik Satie - gymnopedies - la 1 ere. lent et douloureux.ogg"
+Autor: Erik Satie (composicao, 1888); Robin Alciatore (interpretacao ao piano)
+URL de origem: https://commons.wikimedia.org/wiki/File:Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg (arquivo: https://upload.wikimedia.org/wikipedia/commons/9/90/Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg)
+Tipo de licenca/autorizacao: Dominio publico (campo de licenca do Wikimedia Commons: "Public domain")
+Data de obtencao: 30/10/2026
+Restricoes de publicacao/atribuicao: nenhuma exigida pelo dominio publico; atribuicao opcional (Erik Satie / Robin Alciatore)
+Arquivo original: roteiro/originais/trilha/Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg (SHA-256 419e37656856224227086df32d6d481a00a738961e08fca9f6147e472beea53e, 3.696.351 bytes, 183,6 s)
+Arquivo usado: public/audio/trilha.mp3 (MP3 192 kbps 48 kHz, 713,4 s: original sem os silencios de borda, trecho 2,0-182,6 s, repetido 4 vezes com crossfade de 3 s, fade-in 2 s; SHA-256 794b672268a3016f3291c4cc4dfc45cce485aea383ac6273e8fd05c3cdf58bd6). Gravacao e notas inalteradas; sem aceleracao.

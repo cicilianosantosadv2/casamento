@@ -1,0 +1,17 @@
+PROJETO COMPLETO — FILME DE CASAMENTO DANIELA & ANDERSON
+
+PASSO 1 — EXTRAIA ESTE ZIP PARA UMA PASTA NO SEU COMPUTADOR WINDOWS.
+PASSO 2 — ENTRE NA PASTA E DÊ DOIS CLIQUES EM INICIAR_AQUI.cmd.
+PASSO 3 — DÊ DOIS CLIQUES EM 02-EXECUTAR-CLAUDE-CODE.cmd.
+ALTERNATIVA — Abra o Claude Code no terminal dentro dessa pasta, e cole COMANDO-PARA-CLAUDE-CODE.txt.
+
+O Claude Code vai importar as fotos da pasta Windows, auditar 178 fotos únicas, gerar uma folha de contatos, instalar/verificar o Remotion, produzir amostras de voz e uma prévia de 30 segundos.
+
+SEUS VOTOS JÁ ESTÃO INCLUÍDOS no pacote em roteiro/votos-anderson.txt e roteiro/originais/.
+VOTOS DE DANIELA: estarão pendentes até você fornecer em roteiro/votos-daniela.txt.
+TRILHA: deve ser adicionada e ter licença compatível documentada.
+
+A capa usa a fotografia real do brinde. A referência visual aprovada está na pasta referencias/.
+O projeto não contém as 178 fotos, porque já estão no seu computador.
+A exportação FINAL ficará bloqueada até todos os insumos e aprovações estarem presentes.
+O ZIP é um projeto para o Claude Code executar LOCALMENTE, não um filme MP4 pronto.

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Daniela &amp; Anderson — o filme</title>
+<meta name="description" content="Filme do casamento de Daniela e Anderson, montado em código com Remotion: 178 fotografias, os votos dos dois e Gymnopédie No. 1.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0c0b;
+    --surface: #171412;
+    --line: #2a2522;
+    --text: #efe8e1;
+    --muted: #a99f96;
+    --accent: #c9a77c;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f7f3ee;
+      --surface: #fffdfa;
+      --line: #e3dbd1;
+      --text: #231e1a;
+      --muted: #6f655c;
+      --accent: #8a6a42;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f7f3ee; --surface: #fffdfa; --line: #e3dbd1;
+    --text: #231e1a; --muted: #6f655c; --accent: #8a6a42;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 400 17px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+  header { padding: 72px 0 36px; text-align: center; }
+  .eyebrow {
+    font-size: 12px; letter-spacing: .24em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 18px;
+  }
+  h1 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 400; font-size: clamp(44px, 9vw, 92px);
+    line-height: 1; margin: 0;
+  }
+  h1 .amp { font-style: italic; color: var(--accent); }
+  .lede { color: var(--muted); max-width: 560px; margin: 22px auto 0; }
+  .film {
+    margin: 12px 0 0; border: 1px solid var(--line); border-radius: 6px;
+    overflow: hidden; background: #000;
+  }
+  .film video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; }
+  .status {
+    display: flex; gap: 10px; align-items: flex-start;
+    margin: 14px 0 0; font-size: 14px; color: var(--muted);
+  }
+  .status b { color: var(--text); font-weight: 500; }
+  .dot { flex: none; width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: var(--accent); }
+  section { padding: 64px 0 0; }
+  h2 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 500; font-size: 34px; margin: 0 0 18px;
+  }
+  .grid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  @media (min-width: 720px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+  .stat { background: var(--surface); padding: 22px 20px; }
+  .stat .n { font-family: "Cormorant Garamond", Georgia, serif; font-size: 40px; line-height: 1; }
+  .stat .l { color: var(--muted); font-size: 14px; margin-top: 8px; }
+  ol.steps { list-style: none; padding: 0; margin: 0; counter-reset: s; }
+  ol.steps li {
+    counter-increment: s; position: relative;
+    padding: 18px 0 18px 52px; border-top: 1px solid var(--line);
+  }
+  ol.steps li::before {
+    content: counter(s, decimal-leading-zero);
+    position: absolute; left: 0; top: 18px;
+    font-family: "Cormorant Garamond", Georgia, serif; font-size: 22px; color: var(--accent);
+  }
+  ol.steps strong { font-weight: 500; }
+  ol.steps p { margin: 4px 0 0; color: var(--muted); }
+  .two { display: grid; gap: 28px; }
+  @media (min-width: 720px) { .two { grid-template-columns: 1fr 1fr; } }
+  .two p { margin: 0 0 12px; color: var(--muted); }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  code { font-size: 14px; background: var(--surface); border: 1px solid var(--line); padding: 1px 6px; border-radius: 4px; }
+  footer { padding: 72px 0 48px; color: var(--muted); font-size: 14px; text-align: center; }
+</style>
+</head>
+<body>
+  <header class="wrap">
+    <p class="eyebrow">Um filme de casamento feito em código</p>
+    <h1>Daniela <span class="amp">&amp;</span> Anderson</h1>
+    <p class="lede">178 fotografias em ordem cronológica, os votos que os dois escreveram um para o outro e o piano de Erik Satie. Cerca de dez minutos.</p>
+  </header>
+
+  <main class="wrap">
+    <figure class="film">
+      <video controls preload="metadata" playsinline poster="video/capa.jpg">
+        <source src="video/filme.mp4" type="video/mp4">
+        Seu navegador não reproduz vídeo MP4.
+      </video>
+    </figure>
+    <p class="status"><span class="dot"></span><span><b>Versão de pré-aprovação (960×540).</b> A versão final em 1080p será publicada aqui depois que o casal revisar fotos, cronologia, vozes e trilha.</span></p>
+
+    <section>
+      <h2>O projeto em números</h2>
+      <div class="grid">
+        <div class="stat"><div class="n">178</div><div class="l">fotografias únicas, em 7 capítulos</div></div>
+        <div class="stat"><div class="n">9:56</div><div class="l">minutos de filme</div></div>
+        <div class="stat"><div class="n">2</div><div class="l">votos completos, sem cortes</div></div>
+        <div class="stat"><div class="n">17.872</div><div class="l">quadros a 30 por segundo</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Como foi feito</h2>
+      <ol class="steps">
+        <li><strong>Fotografias</strong><p>As fotos foram lidas das pastas originais sem alteração. Duplicadas foram removidas por impressão digital (SHA-256), e a ordem segue os capítulos do dia.</p></li>
+        <li><strong>Votos</strong><p>O texto de cada voto foi conferido palavra por palavra contra o documento original. A narração usa vozes sintéticas em português (Edge TTS), sem cortes e sem aceleração.</p></li>
+        <li><strong>Trilha</strong><p>Gymnopédie No. 1, de Erik Satie, ao piano de Robin Alciatore. Gravação em domínio público, do Wikimedia Commons. A música baixa sozinha enquanto há voz.</p></li>
+        <li><strong>Montagem</strong><p>Cada cena é um componente React renderizado com Remotion: movimento lento nas fotos, transições suaves, abertura e encerramento próprios.</p></li>
+        <li><strong>Aprovação</strong><p>O render final só roda depois que o casal marca seis aprovações: fotos, cronologia, cada voz, trilha e montagem.</p></li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Por trás das cenas</h2>
+      <div class="two">
+        <div>
+          <p>O código está no GitHub: <a href="https://github.com/cicilianosantosadv2/casamento">cicilianosantosadv2/casamento</a>.</p>
+          <p>O repositório guarda só o código e o roteiro técnico. Fotos, documentos dos votos e áudios ficam fora dele.</p>
+        </div>
+        <div>
+          <p>Ferramentas: Remotion 4, React, TypeScript, Node.js, Python, FFmpeg e Edge TTS.</p>
+          <p>Para gerar o filme final: <code>npm run render</code>.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">Daniela &amp; Anderson · 2026</footer>
+</body>
+</html>
