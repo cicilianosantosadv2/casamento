@@ -233,6 +233,13 @@
   }
   .chip[aria-current="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 600; }
 
+  /* Modo TV: foco bem visível quando se navega pelas setas do controle ou do teclado */
+  .kbd a:focus, .kbd button:focus, .kbd .ep:focus, .kbd video:focus { outline: 4px solid var(--accent); outline-offset: 4px; }
+  .kbd .card:focus { outline: none; transform: translateY(-3px) scale(1.04); }
+  .kbd .card:focus .pic { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent), 0 10px 30px #000c; }
+  .kbd .top nav a:focus { color: var(--text); }
+  .kbd video:focus { outline-offset: -4px; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
     html { scroll-behavior: auto; }
@@ -443,7 +450,8 @@
     document.body.classList.add("locked");
     var go = function () { video.currentTime = Math.min(start, END - 1); video.play().catch(function () {}); };
     if (video.readyState >= 1) go(); else video.addEventListener("loadedmetadata", go, { once: true });
-    $("p-close").focus();
+    // No controle remoto o foco vai para o vídeo, para o OK pausar em vez de fechar
+    (document.body.classList.contains("kbd") ? video : $("p-close")).focus();
     current = -2; paintNow();
   }
   function close() {
@@ -468,8 +476,57 @@
     var i = chapterAt(video.currentTime);
     if (i + 1 < CH.length) { video.currentTime = CH[i + 1].s; video.play().catch(function () {}); }
   });
+  // Modo TV: setas do controle remoto (ou do teclado) andam entre botões, cards e capítulos
+  var BACK = { Escape: 1, Backspace: 1, BrowserBack: 1, GoBack: 1 }, BACK_CODES = { 8: 1, 27: 1, 461: 1, 10009: 1 };
+  var DIRS = { ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right", Up: "up", Down: "down", Left: "left", Right: "right" };
+  var DIR_CODES = { 37: "left", 38: "up", 39: "right", 40: "down" };
+  function focusables() {
+    var scope = player.classList.contains("open") ? player : document;
+    return [].filter.call(scope.querySelectorAll("a[href], button, [tabindex='0'], video"), function (el) {
+      return el.getClientRects().length && (scope === player || !player.contains(el));
+    });
+  }
+  function moveFocus(dir) {
+    var list = focusables(), cur = document.activeElement;
+    if (list.indexOf(cur) < 0) return player.classList.contains("open") ? video : $("btn-play");
+    var a = cur.getBoundingClientRect(), best = null, bestScore = Infinity;
+    list.forEach(function (el) {
+      if (el === cur) return;
+      var b = el.getBoundingClientRect(), gap, side;
+      if (dir === "down") { if (b.top < a.bottom - 4) return; gap = b.top - a.bottom; side = Math.max(0, b.left - a.right, a.left - b.right); }
+      else if (dir === "up") { if (b.bottom > a.top + 4) return; gap = a.top - b.bottom; side = Math.max(0, b.left - a.right, a.left - b.right); }
+      else if (dir === "right") { if (b.left < a.right - 4 || b.top >= a.bottom || b.bottom <= a.top) return; gap = b.left - a.right; side = Math.max(0, b.top - a.bottom, a.top - b.bottom); }
+      else { if (b.right > a.left + 4 || b.top >= a.bottom || b.bottom <= a.top) return; gap = a.left - b.right; side = Math.max(0, b.top - a.bottom, a.top - b.bottom); }
+      var score = Math.max(0, gap) + side * 3;
+      if (score < bestScore) { bestScore = score; best = el; }
+    });
+    return best;
+  }
+  function show(el) {
+    el.focus({ preventScroll: true });
+    if (player.contains(el)) { if (el.classList.contains("chip")) el.scrollIntoView({ block: "nearest", inline: "nearest" }); }
+    else if ($("top").contains(el) || $("inicio").contains(el) && el.closest(".actions")) window.scrollTo(0, 0);
+    else el.scrollIntoView({ block: "center", inline: "nearest" });
+  }
+  document.addEventListener("mousedown", function () { document.body.classList.remove("kbd"); });
   document.addEventListener("keydown", function (ev) {
-    if (ev.key === "Escape" && player.classList.contains("open")) close();
+    var open = player.classList.contains("open"), dir = DIRS[ev.key] || DIR_CODES[ev.keyCode];
+    if (open && (BACK[ev.key] || BACK_CODES[ev.keyCode])) { ev.preventDefault(); close(); return; }
+    if (!dir && ev.key !== "Enter" && ev.key !== "Tab") return;
+    document.body.classList.add("kbd");
+    if (!splash.classList.contains("out")) hideSplash();
+    if (!dir) return;
+    // No vídeo: esquerda e direita voltam ou avançam 10 s
+    if (open && document.activeElement === video && (dir === "left" || dir === "right")) {
+      ev.preventDefault();
+      video.currentTime = Math.max(0, Math.min(END - 1, video.currentTime + (dir === "right" ? 10 : -10)));
+      return;
+    }
+    var next = moveFocus(dir);
+    if (next) { ev.preventDefault(); show(next); }
+  });
+  video.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); if (video.paused) video.play().catch(function () {}); else video.pause(); }
   });
   video.addEventListener("timeupdate", function () {
     paintNow();
