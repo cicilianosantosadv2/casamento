@@ -481,21 +481,20 @@
   var castBtn = $("p-cast"), castTxt = $("p-cast-txt"), castMsg = $("cast-msg"), msgTimer;
   function castNote(text) {
     castMsg.textContent = text; castMsg.classList.add("show");
-    clearTimeout(msgTimer); msgTimer = setTimeout(function () { castMsg.classList.remove("show"); }, 5000);
+    clearTimeout(msgTimer); msgTimer = setTimeout(function () { castMsg.classList.remove("show"); }, 10000);
   }
   function castState(on) {
     castBtn.classList.toggle("on", on);
     castTxt.textContent = on ? "Na TV" : "Transmitir para a TV";
   }
   if (video.remote && typeof video.remote.prompt === "function") {
-    video.remote.watchAvailability(function (ok) { castBtn.classList.toggle("show", ok); })
-      .catch(function () { castBtn.classList.add("show"); });
+    // Sempre visível: algumas TVs só aparecem depois do clique, e as que não aceitam ganham um aviso com alternativas
+    castBtn.classList.add("show");
     video.remote.addEventListener("connect", function () { castState(true); castNote("Tocando na TV. Os capítulos continuam funcionando aqui."); });
     video.remote.addEventListener("disconnect", function () { castState(false); });
     castBtn.addEventListener("click", function () {
       video.remote.prompt().catch(function (err) {
-        if (err && err.name === "NotFoundError") castNote("Nenhuma TV encontrada. Ligue a TV e confira se ela está no mesmo Wi-Fi.");
-        else if (!err || err.name !== "AbortError") castNote("Não foi possível transmitir por aqui. Tente pelo menu ⋮ do vídeo.");
+        if (!err || err.name !== "AbortError") castNote("Sua TV não aceitou a transmissão pelo Chrome. Abra este endereço no navegador da TV, ou aperte Windows + K no computador para espelhar a tela.");
       });
     });
   } else if (window.WebKitPlaybackTargetAvailabilityEvent) {
